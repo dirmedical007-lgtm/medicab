@@ -23,3 +23,5 @@ docker compose -f compose.prod.yml pull
 docker compose -f compose.prod.yml up -d
 docker compose -f compose.prod.yml exec web python manage.py migrate --noinput
 ```
+
+> v4: pgcrypto depuis GitHub + git dans Docker/CI (compat Python 3.13).
