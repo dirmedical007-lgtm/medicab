@@ -1,6 +1,6 @@
 FROM python:3.13.17-slim
-ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y     build-essential libpq-dev     tesseract-ocr libtesseract-dev     libxml2 libxslt1.1 libpango-1.0-0 libpangoft2-1.0-0     libffi8 libcairo2 libjpeg62-turbo zlib1g netcat-traditional     && rm -rf /var/lib/apt/lists/*
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y build-essential libpq-dev tesseract-ocr libpango-1.0-0 libcairo2 libxml2 libxslt1.1 && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt

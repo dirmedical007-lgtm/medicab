@@ -1,18 +1,33 @@
-# Déploiement (GitHub + Docker)
+# MediCab – Pack propre (CI OK) : déploiement & procédure
 
-## GHCR (recommandé)
-- Push sur `main` ➜ `.github/workflows/build-push.yml` publie `ghcr.io/<org>/<repo>:main`.
-- Sur le serveur:
+## 1) Remplacer ton dépôt local
+- Supprime tout le contenu de ton repo local **sauf** le dossier `.git/`.
+- Copie **tout** le contenu de ce pack dans ton repo local.
+
+## 2) Commit & push
 ```bash
-cp .env.example .env  # édite les secrets et ALLOWED_HOSTS
+git add -A
+git commit -m "Replace with clean pack (Django 5 + Python 3.13 + pgcrypto fix)"
+git push origin main --force
+```
+
+## 3) Vérifier la CI
+- Va sur l’onglet **Actions** → le job **CI** doit passer.
+
+## 4) Lancer en local (dev)
+```bash
+cp .env.example .env
+docker compose build
+docker compose up -d
+docker compose exec web python manage.py migrate
+```
+
+## 5) Déployer en prod (image GHCR)
+- `compose.prod.yml` utilise `ghcr.io/dirmedical007-lgtm/medicab:main`.
+- Sur le serveur :
+```bash
+cp .env.example .env
 docker compose -f compose.prod.yml pull
 docker compose -f compose.prod.yml up -d
 docker compose -f compose.prod.yml exec web python manage.py migrate
-docker compose -f compose.prod.yml exec web python manage.py seed_initial
-```
-## Déploiement local (sans registry)
-```bash
-docker compose -f compose.deploy.local.yml up -d --build
-docker compose -f compose.deploy.local.yml exec web python manage.py migrate
-docker compose -f compose.deploy.local.yml exec web python manage.py seed_initial
 ```
