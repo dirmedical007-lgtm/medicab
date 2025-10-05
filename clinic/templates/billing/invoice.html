@@ -1,0 +1,18 @@
+<!doctype html><html lang="fr"><meta charset="utf-8">
+<style>@page { size: A4; margin: 16mm } body{font-family: DejaVu Sans, sans-serif; font-size:12pt} table{width:100%; border-collapse: collapse} th,td{border:1px solid #000; padding:6px;} td.right{text-align:right}</style>
+<body>
+  <h2>Facture</h2>
+  <p><strong>Patient :</strong> {{ inv.patient.last_name }} {{ inv.patient.first_name }}</p>
+  <table>
+    <thead><tr><th>Code</th><th>Libellé</th><th>Prix</th></tr></thead>
+    <tbody>
+      {% for act in inv.acts %}
+      <tr><td>{{ act.code }}</td><td>{{ act.label }}</td><td class="right">{{ act.price }} €</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p><strong>Total devis :</strong> {{ inv.quote_total }} €</p>
+  <p><strong>Payé :</strong> {{ inv.paid }} €</p>
+  <p><strong>Reste dû :</strong> {{ inv.quote_total|floatformat:2 }}</p>
+  <p>Date : {{ inv.created_at|date:"d/m/Y" }}</p>
+</body></html>

@@ -1,0 +1,37 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env: { POSTGRES_DB: medicab, POSTGRES_USER: medicab, POSTGRES_PASSWORD: medicab }
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd="pg_isready -U medicab -d medicab"
+          --health-interval=10s --health-timeout=5s --health-retries=5
+      redis: { image: redis:7-alpine, ports: ["6379:6379"] }
+    env:
+      POSTGRES_DB: medicab
+      POSTGRES_USER: medicab
+      POSTGRES_PASSWORD: medicab
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+      REDIS_URL: redis://localhost:6379/0
+      SECRET_KEY: test
+      DEBUG: 0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13.17" }
+      - name: Install system deps
+        run: sudo apt-get update && sudo apt-get install -y tesseract-ocr libpango-1.0-0 libcairo2 libxml2 libxslt1.1
+      - name: Install pip deps
+        run: pip install -r requirements.txt
+      - name: Migrate
+        run: python manage.py migrate
+      - name: Lint
+        run: python -m py_compile $(git ls-files '*.py')
+      - name: Tests
+        run: pytest -q
