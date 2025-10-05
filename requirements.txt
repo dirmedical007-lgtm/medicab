@@ -22,7 +22,7 @@ pytz==2024.1
 gunicorn==22.0.0
 
 # Database (psycopg v3 binary, no compile needed)
-psycopg[binary]==3.2.1
+psycopg==3.1.19
 
 # Testing
 pytest==8.2.2
