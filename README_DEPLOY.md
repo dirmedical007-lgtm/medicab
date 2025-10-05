@@ -1,33 +1,31 @@
-# MediCab – Pack propre (CI OK) : déploiement & procédure
+# MediCab – Pack v2 (stable, CI ok)
 
-## 1) Remplacer ton dépôt local
-- Supprime tout le contenu de ton repo local **sauf** le dossier `.git/`.
-- Copie **tout** le contenu de ce pack dans ton repo local.
+## 1) Remplacer votre dépôt
+- Supprimez tout le contenu **sauf** `.git/`.
+- Copiez **tout** ce pack dans le dépôt.
 
 ## 2) Commit & push
 ```bash
 git add -A
-git commit -m "Replace with clean pack (Django 5 + Python 3.13 + pgcrypto fix)"
+git commit -m "Replace with clean pack v2 (Django 5, Python 3.13, psycopg v3 binary)"
 git push origin main --force
 ```
 
 ## 3) Vérifier la CI
-- Va sur l’onglet **Actions** → le job **CI** doit passer.
+- GitHub → **Actions** : le job **CI** doit passer 🟢.
 
-## 4) Lancer en local (dev)
+## 4) Démarrer en local
 ```bash
 cp .env.example .env
 docker compose build
 docker compose up -d
-docker compose exec web python manage.py migrate
+docker compose exec web python manage.py migrate --noinput
 ```
 
 ## 5) Déployer en prod (image GHCR)
-- `compose.prod.yml` utilise `ghcr.io/dirmedical007-lgtm/medicab:main`.
-- Sur le serveur :
 ```bash
 cp .env.example .env
 docker compose -f compose.prod.yml pull
 docker compose -f compose.prod.yml up -d
-docker compose -f compose.prod.yml exec web python manage.py migrate
+docker compose -f compose.prod.yml exec web python manage.py migrate --noinput
 ```

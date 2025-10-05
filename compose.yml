@@ -1,11 +1,15 @@
 version: "3.9"
 services:
   web:
-    build: { context: ., dockerfile: docker/Dockerfile.dev }
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
     env_file: .env
     command: bash docker/entrypoint.sh
     ports: ["8000:8000"]
-    depends_on: [db, redis]
+    depends_on:
+      - db
+      - redis
   db:
     image: postgres:16
     environment:

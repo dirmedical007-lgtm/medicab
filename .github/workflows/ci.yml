@@ -6,12 +6,17 @@ jobs:
     services:
       postgres:
         image: postgres:16
-        env: { POSTGRES_DB: medicab, POSTGRES_USER: medicab, POSTGRES_PASSWORD: medicab }
+        env:
+          POSTGRES_DB: medicab
+          POSTGRES_USER: medicab
+          POSTGRES_PASSWORD: medicab
         ports: ["5432:5432"]
         options: >-
           --health-cmd="pg_isready -U medicab -d medicab"
           --health-interval=10s --health-timeout=5s --health-retries=5
-      redis: { image: redis:7-alpine, ports: ["6379:6379"] }
+      redis:
+        image: redis:7-alpine
+        ports: ["6379:6379"]
     env:
       POSTGRES_DB: medicab
       POSTGRES_USER: medicab
@@ -32,8 +37,8 @@ jobs:
       - name: Install pip deps
         run: pip install -r requirements.txt
       - name: Migrate
-        run: python manage.py migrate
-      - name: Lint
+        run: python manage.py migrate --noinput
+      - name: Lint (syntax compile)
         run: python -m py_compile $(git ls-files '*.py')
       - name: Tests
-        run: echo "no tests yet"
+        run: echo "No tests yet"
