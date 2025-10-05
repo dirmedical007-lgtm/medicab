@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from pgcrypto import fields as pgf
++ from django_pgcrypto_fields import fields as pgf
 from django.utils import timezone
 from medicab.storage_backends import ExamsStorage, PrescriptionsStorage
 class Patient(models.Model):
