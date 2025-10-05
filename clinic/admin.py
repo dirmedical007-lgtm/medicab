@@ -1,3 +1,3 @@
 from django.contrib import admin
-from .models import Patient
-admin.site.register(Patient)
+from .models import *
+for m in [Patient,Antecedent,Allergy,Doctor,Appointment,Consultation,Exam,Drug,Prescription,PrescriptionItem,Invoice,InvoiceItem,AuditLog]: admin.site.register(m)

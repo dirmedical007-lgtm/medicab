@@ -1,14 +1,14 @@
-# MediCab – Clean Pack v6 (Django 5 / Python 3.13)
+# MediCab – Pack complet (Django 5 + DRF, SQLite local)
 
-Ce pack minimal build **sans erreur** en Py 3.13, avec `django-pgcrypto-fields` depuis **GitHub**.
-
-## Démarrer (dev)
-```bash
-cp .env.example .env
-docker compose up --build -d
-# API: http://localhost:8000/api/v1/patients/
+Démarrage rapide :
 ```
-
-## CI
-- `ci.yml` installe `git`, installe les deps, **vérifie l'import** `django_pgcrypto_fields`, puis `migrate`.
-- `build-push.yml` construit l'image Docker et la pousse vers GHCR.
+python -m venv .venv
+# Windows: .venv\Scripts\activate    # macOS/Linux: source .venv/bin/activate
+pip install -U pip
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py seed_full
+python manage.py runserver
+```
+Admin: http://127.0.0.1:8000/admin  (admin / admin123)
+API:   http://127.0.0.1:8000/api/v1/patients/
