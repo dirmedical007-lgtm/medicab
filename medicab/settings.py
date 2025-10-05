@@ -61,3 +61,5 @@ CSRF_TRUSTED_ORIGINS=["http://localhost:8000","http://127.0.0.1:8000"]
 SECURE_PROXY_SSL_HEADER=('HTTP_X_FORWARDED_PROTO','https')
 ROOT_URLCONF="medicab.urls"; WSGI_APPLICATION="medicab.wsgi.application"; ASGI_APPLICATION="medicab.asgi.application"
 LANGUAGE_CODE="fr-fr"; TIME_ZONE="UTC"; USE_I18N=True; USE_TZ=True
+PGCRYPTO_KEY = os.getenv("PGCRYPTO_KEY", "dev_pgcrypto_key")
+
