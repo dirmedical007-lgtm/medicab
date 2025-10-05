@@ -11,16 +11,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Install system deps
+      - name: Install system deps (git, tesseract, libs)
         run: sudo apt-get update && sudo apt-get install -y git libpq-dev tesseract-ocr libpango-1.0-0 libcairo2 libxml2 libxslt1.1
       - name: Install pip deps
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          python - <<'PY'
-          import importlib; import sys
+      - name: Verify pgcrypto import
+        run: python - <<'PY'
+          import importlib, sys
           importlib.import_module("django_pgcrypto_fields")
-          print("pgcrypto OK", file=sys.stderr)
+          print("OK: django_pgcrypto_fields importé", file=sys.stderr)
           PY
       - name: Migrate (sqlite)
         env:

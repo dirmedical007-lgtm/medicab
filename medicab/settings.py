@@ -47,7 +47,6 @@ TEMPLATES = [{
 
 WSGI_APPLICATION = 'medicab.wsgi.application'
 
-# DB: sqlite by default (CI friendly). Postgres via env.
 if os.getenv('DJANGO_DB','sqlite') == 'postgres':
     DATABASES = {
         'default': {
@@ -61,13 +60,6 @@ if os.getenv('DJANGO_DB','sqlite') == 'postgres':
     }
 else:
     DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3'}}
-
-AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
-]
 
 LANGUAGE_CODE = 'fr-fr'
 TIME_ZONE = 'Europe/Paris'

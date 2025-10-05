@@ -7,12 +7,13 @@ celery==5.4.0
 redis==5.0.7
 django-storages[boto3]==1.14.4
 boto3==1.34.162
-# pgcrypto depuis GitHub (compat Python 3.13)
+# Force pgcrypto depuis GitHub (compat Py 3.13)
 git+https://github.com/incuna/django-pgcrypto-fields.git@master
 python-dotenv==1.0.1
 pytz==2024.1
 gunicorn==22.0.0
-psycopg==3.1.19
+# sqlite par défaut ; psycopg optionnel si Postgres est activé
+psycopg2-binary==2.9.9
 pytest==8.2.2
 pytest-django==4.8.0
 flake8==7.0.0
